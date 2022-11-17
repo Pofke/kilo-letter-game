@@ -3,21 +3,20 @@
 namespace App\GuessingGame\Game;
 
 use App\GuessingGame\Player\PlayerInterface;
-use App\GuessingGame\State;
 
-class Game implements GameInterface
+class LuckyDraw implements GameInterface
 {
     private State $state;
-    private PlayerInterface $player;
+    private array $players;
 
-    public function createState(): void
+    public function __construct(State $state = null)
     {
-        $this->state = new State();
+        $this->state = $state ?? new State();
     }
 
     public function addPlayer(PlayerInterface $player): void
     {
-        $this->player = $player;
+        $this->players[] = $player;
     }
 
     public function makeTurn()

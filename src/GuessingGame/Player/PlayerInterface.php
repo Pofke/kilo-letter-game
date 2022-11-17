@@ -2,7 +2,7 @@
 
 namespace App\GuessingGame\Player;
 
-use App\GuessingGame\State;
+use App\GuessingGame\Game\State;
 
 interface PlayerInterface
 {

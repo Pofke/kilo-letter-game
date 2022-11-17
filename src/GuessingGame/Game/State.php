@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GuessingGame;
+namespace App\GuessingGame\Game;
 
 class State
 {
