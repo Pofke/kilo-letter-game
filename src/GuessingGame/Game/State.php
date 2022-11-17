@@ -4,13 +4,18 @@ namespace App\GuessingGame\Game;
 
 class State
 {
-    private array $secret;
-    private array $maskedWord;
-
-    public function __construct()
+    public function __construct(private array $secret, private array $maskedWord)
     {
-        $this->secret = $this->createWord();
-        $this->maskedWord = array_fill(0, count($this->secret), "_");
+    }
+
+    public static function fromWord(string $word)
+    {
+        $secret = str_split($word);
+        return new self(
+            $secret,
+            array_fill(0, count($secret), '_')
+        );
+
     }
 
     public function getMaskedWord(): array
@@ -18,8 +23,12 @@ class State
         return $this->maskedWord;
     }
 
-    private function createWord(): array
+    public function isFinished(): bool
     {
-        return ["m", "i", "a", "u"];
+        if (in_array('_', $this->getMaskedWord(), true)) {
+            return false;
+        }
+        return true;
     }
+
 }

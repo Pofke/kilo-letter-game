@@ -7,11 +7,14 @@ use App\GuessingGame\Player\PlayerInterface;
 class LuckyDraw implements GameInterface
 {
     private State $state;
-    private array $players;
+    private array $players = [];
 
     public function __construct(State $state = null)
     {
-        $this->state = $state ?? new State();
+        $words = ['telephone', 'desk', 'sleep', 'beast'];
+        shuffle($words);
+        $secret = $words[0];
+        $this->state = State::fromWord($secret) ?? $state;
     }
 
     public function addPlayer(PlayerInterface $player): void
@@ -21,14 +24,15 @@ class LuckyDraw implements GameInterface
 
     public function makeTurn()
     {
-        $letter = $this->player->guessLetter($this->state);
+        foreach ($this->players as $player) {
+
+        }
     }
 
-    public function isFinished(): bool
+    public function getState(): State
     {
-        if (in_array('_', $this->state->getMaskedWord(), true)) {
-            return false;
-        }
-        return true;
+        return $this->state;
     }
+
+
 }
