@@ -28,8 +28,9 @@ class LuckyDraw implements GameInterface
         /** @var PlayerInterface|callable $player */
         foreach ($this->players as $nickname => $player) {
             $this->state->addLetter($player($this->state));
-            if($this->state->isFinished() && $this->winner == null)
+            if ($this->state->isFinished() && $this->winner == null) {
                 $this->winner = $nickname;
+            }
         }
         return $this->state;
     }
@@ -43,6 +44,4 @@ class LuckyDraw implements GameInterface
     {
         return $this->state;
     }
-
-
 }

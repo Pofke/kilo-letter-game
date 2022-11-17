@@ -16,8 +16,7 @@ class SoberPlayer implements PlayerInterface
     public function __invoke(State $state): string
     {
         $letter = chr(rand(97, 122));
-        while(in_array($letter, $this->guessedLetters))
-        {
+        while (in_array($letter, $this->guessedLetters)) {
             $letter = chr(rand(97, 122));
         }
         return $letter;
