@@ -4,7 +4,6 @@ namespace App\Tests\Unit;
 
 use App\GuessingGame\Game\LuckyDraw;
 use App\GuessingGame\Game\State;
-use App\GuessingGame\Player\FakePlayer;
 use PHPUnit\Framework\TestCase;
 
 class LuckyDrawTest extends TestCase

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\GuessingGame\Player;
+namespace App\Tests\Unit;
 
 use App\GuessingGame\Game\State;
+use App\GuessingGame\Player\PlayerInterface;
 
 class FakePlayer implements PlayerInterface
 {
