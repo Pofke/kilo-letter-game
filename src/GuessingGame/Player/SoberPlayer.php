@@ -13,7 +13,7 @@ class SoberPlayer implements PlayerInterface
     }
 
 
-    public function guessLetter(State $state): string
+    public function __invoke(State $state): string
     {
         $letter = chr(rand(97, 122));
         while(in_array($letter, $this->guessedLetters))

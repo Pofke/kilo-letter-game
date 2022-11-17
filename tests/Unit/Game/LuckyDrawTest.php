@@ -15,12 +15,57 @@ class LuckyDrawTest extends TestCase
         $this->assertFalse($luckyDraw->getState()->isFinished());
     }
 
-    public function testLetterTestSuccessfull()
+    public function testLetterGuessSuccessfully()
     {
         $luckyDraw = new LuckyDraw(State::fromWord('hi'));
-        $luckyDraw->addPlayer(new FakePlayer());
+        $luckyDraw->addPlayer(new FakePlayer(), 'fake');
         $state = $luckyDraw->makeTurn();
         $this->assertSame(['h', '_'], $state->getMaskedWord());
 
+    }
+
+
+    public function testGameIsFinishedCorrectly()
+    {
+        $luckyDraw = new LuckyDraw(State::fromWord('h'));
+        $luckyDraw->addPlayer(new FakePlayer(), 'fake');
+        $state = $luckyDraw->makeTurn();
+        $this->assertSame(['h'], $state->getMaskedWord());
+        $this->assertTrue($state->isFinished());
+    }
+
+    public function testTwoRounds()
+    {
+        $luckyDraw = new LuckyDraw(State::fromWord('hi'));
+        $luckyDraw->addPlayer(function() {
+            return 'h';
+        }, 'first');
+
+        $luckyDraw->addPlayer(function() {
+            return 'i';
+        }, 'second');
+
+        $state = $luckyDraw->makeTurn();
+        $this->assertTrue($state->isFinished());
+    }
+
+    public function testGameEndsAfterSecondRound()
+    {
+        $luckyDraw = new LuckyDraw(State::fromWord('hi'));
+        $luckyDraw->addPlayer(function() {
+            return 'h';
+        }, 'first');
+
+        $luckyDraw->addPlayer(function() {
+            return 'i';
+        }, 'second');
+
+
+        $luckyDraw->addPlayer(function() {
+            return 'i';
+        }, 'third');
+
+        $luckyDraw->makeTurn();
+        $this->assertSame('second', $luckyDraw->getWinner());
     }
 }

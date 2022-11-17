@@ -8,6 +8,7 @@ class LuckyDraw implements GameInterface
 {
     private State $state;
     private array $players = [];
+    private ?string $winner = null;
 
     public function __construct(State $state = null)
     {
@@ -17,17 +18,25 @@ class LuckyDraw implements GameInterface
         $this->state = $state ?? State::fromWord($secret);
     }
 
-    public function addPlayer(PlayerInterface $player): void
+    public function addPlayer(PlayerInterface|callable $player, string $name): void
     {
-        $this->players[] = $player;
+        $this->players[$name] = $player;
     }
 
     public function makeTurn()
     {
-        foreach ($this->players as $player) {
-            $this->state->addLetter($player->guessLetter($this->state));
+        /** @var PlayerInterface|callable $player */
+        foreach ($this->players as $nickname => $player) {
+            $this->state->addLetter($player($this->state));
+            if($this->state->isFinished() && $this->winner == null)
+                $this->winner = $nickname;
         }
         return $this->state;
+    }
+
+    public function getWinner(): ?string
+    {
+        return $this->winner;
     }
 
     public function getState(): State
