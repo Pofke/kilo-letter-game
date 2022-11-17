@@ -4,7 +4,7 @@ namespace App\GuessingGame\Game;
 
 class State
 {
-    public function __construct(private array $secret, private array $maskedWord)
+    public function __construct(private array $secret, private array $maskedWord = [])
     {
     }
 
@@ -16,6 +16,19 @@ class State
             array_fill(0, count($secret), '_')
         );
 
+    }
+
+    public function addLetter(string $letter)
+    {
+        $i = 0;
+        foreach ($this->secret as $secretLetter)
+        {
+            if($secretLetter === $letter)
+            {
+                $this->maskedWord[$i] = $letter;
+            }
+            $i++;
+        }
     }
 
     public function getMaskedWord(): array

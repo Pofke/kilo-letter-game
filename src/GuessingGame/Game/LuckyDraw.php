@@ -14,7 +14,7 @@ class LuckyDraw implements GameInterface
         $words = ['telephone', 'desk', 'sleep', 'beast'];
         shuffle($words);
         $secret = $words[0];
-        $this->state = State::fromWord($secret) ?? $state;
+        $this->state = $state ?? State::fromWord($secret);
     }
 
     public function addPlayer(PlayerInterface $player): void
@@ -25,8 +25,9 @@ class LuckyDraw implements GameInterface
     public function makeTurn()
     {
         foreach ($this->players as $player) {
-
+            $this->state->addLetter($player->guessLetter($this->state));
         }
+        return $this->state;
     }
 
     public function getState(): State
