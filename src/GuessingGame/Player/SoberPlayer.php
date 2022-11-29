@@ -6,12 +6,9 @@ use App\GuessingGame\Game\State;
 
 class SoberPlayer implements PlayerInterface
 {
-    private array $guessedLetters;
-    public function __construct()
+    public function __construct(private array $guessedLetters = [])
     {
-        $this->guessedLetters = [];
     }
-
 
     public function __invoke(State $state): string
     {

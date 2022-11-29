@@ -23,7 +23,7 @@ class LuckyDraw implements GameInterface
         $this->players[$name] = $player;
     }
 
-    public function makeTurn()
+    public function makeTurn(): State
     {
         /** @var PlayerInterface|callable $player */
         foreach ($this->players as $nickname => $player) {
@@ -43,5 +43,12 @@ class LuckyDraw implements GameInterface
     public function getState(): State
     {
         return $this->state;
+    }
+
+    public function autoplay(): void
+    {
+        do {
+            $this->makeTurn();
+        } while ($this->getWinner() === null);
     }
 }

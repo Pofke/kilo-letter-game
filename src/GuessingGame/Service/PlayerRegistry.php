@@ -2,13 +2,18 @@
 
 namespace App\GuessingGame\Service;
 
+use App\GuessingGame\Player\DrunkPlayer;
 use App\GuessingGame\Player\PlayerInterface;
+use App\GuessingGame\Player\SoberPlayer;
 
 class PlayerRegistry
 {
-    public function __construct(private array $players)
+    public function __construct(private array $players = [])
     {
-        $this->players = [];
+        $this->players = [
+            'drunk' => new DrunkPlayer(),
+            'sober' => new SoberPlayer()
+        ];
     }
 
     public function get($playerId): PlayerInterface
